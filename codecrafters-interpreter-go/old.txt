@@ -1,0 +1,177 @@
+
+
+// func scanSimple(content string) int {
+// 	exit_code := 0
+// 	content_len := len(content)
+// 	line := 1
+// 	lexical_error := false
+// 	for pos := 0; pos < content_len; pos++ {
+// 		current := content[pos]
+// 		switch current {
+// 		case ' ', '\t':
+// 		case '\n':
+// 			line++
+// 		case '"':
+// 			lexical_error = false
+// 			if pos == content_len-1 {
+// 				fmt.Fprintf(os.Stderr, "[line %d] Error: Unterminated string.\n", line)
+// 				exit_code = 65
+// 			}
+// 			str := ""
+// 			for {
+// 				pos++
+// 				if content[pos] == '"' {
+// 					break
+// 				}
+// 				if pos == content_len-1 {
+// 					lexical_error = true
+// 					fmt.Fprintf(os.Stderr, "[line %d] Error: Unterminated string.\n", line)
+// 					exit_code = 65
+// 					break
+// 				}
+// 				str = str + string(content[pos])
+// 			}
+// 			if !lexical_error {
+// 				fmt.Fprintf(os.Stdout, "STRING \"%s\" %s\n", str, str)
+// 			}
+// 		case '(':
+// 			fmt.Println("LEFT_PAREN ( null")
+// 		case ')':
+// 			fmt.Println("RIGHT_PAREN ) null")
+// 		case '}':
+// 			fmt.Println("RIGHT_BRACE } null")
+// 		case '{':
+// 			fmt.Println("LEFT_BRACE { null")
+// 		case '*':
+// 			fmt.Println("STAR * null")
+// 		case '+':
+// 			fmt.Println("PLUS + null")
+// 		case '-':
+// 			fmt.Println("MINUS - null")
+// 		case '.':
+// 			fmt.Println("DOT . null")
+// 		case ',':
+// 			fmt.Println("COMMA , null")
+// 		case ';':
+// 			fmt.Println("SEMICOLON ; null")
+// 		case '=':
+// 			if pos < content_len-1 && content[pos+1] == '=' {
+// 				fmt.Println("EQUAL_EQUAL == null")
+// 				pos++
+// 			} else {
+// 				fmt.Println("EQUAL = null")
+// 			}
+// 		case '!':
+// 			if pos < content_len-1 && content[pos+1] == '=' {
+// 				fmt.Println("BANG_EQUAL != null")
+// 				pos++
+// 			} else {
+// 				fmt.Println("BANG ! null")
+// 			}
+// 		case '<':
+// 			if pos < content_len-1 && content[pos+1] == '=' {
+// 				fmt.Println("LESS_EQUAL <= null")
+// 				pos++
+// 			} else {
+// 				fmt.Println("LESS < null")
+// 			}
+// 		case '>':
+// 			if pos < content_len-1 && content[pos+1] == '=' {
+// 				fmt.Println("GREATER_EQUAL >= null")
+// 				pos++
+// 			} else {
+// 				fmt.Println("GREATER > null")
+// 			}
+// 		case '/':
+// 			if pos < content_len-1 && content[pos+1] == '/' {
+// 				for {
+// 					pos++
+// 					if pos == content_len-1 {
+// 						break
+// 					} else if content[pos] == '\n' {
+// 						line++
+// 						break
+// 					}
+// 				}
+// 			} else {
+// 				fmt.Println("SLASH / null")
+// 			}
+// 		case '0':
+// 			fallthrough
+// 		case '1':
+// 			fallthrough
+// 		case '2':
+// 			fallthrough
+// 		case '3':
+// 			fallthrough
+// 		case '4':
+// 			fallthrough
+// 		case '5':
+// 			fallthrough
+// 		case '6':
+// 			fallthrough
+// 		case '7':
+// 			fallthrough
+// 		case '8':
+// 			fallthrough
+// 		case '9':
+// 			str := string(content[pos])
+// 			for {
+// 				pos++
+// 				if pos == content_len || content[pos] == ' ' || content[pos] == '\n' {
+// 					break
+// 				}
+//
+// 				if !slices.Contains(LEGAL_NUM, rune(content[pos])) {
+// 					pos = pos - 1
+// 					break
+// 				}
+//
+// 				str = str + string(content[pos])
+// 			}
+//
+// 			num_str := str
+// 			if !strings.Contains(str, string(DOT)) {
+// 				str = str + ".0"
+// 			} else {
+// 				trailing_zeros := 0
+// 				for i := len(str) - 1; i >= 0; i-- {
+// 					if str[i] == '0' && str[i-1] != '.' {
+// 						trailing_zeros++
+// 					}
+// 					if str[i] == '.' {
+// 						break
+// 					}
+// 				}
+// 				if trailing_zeros > 0 {
+// 					str = str[:(int(len(str)) - trailing_zeros)]
+// 				}
+// 			}
+// 			fmt.Fprintf(os.Stdout, "NUMBER %s %s\n", num_str, str)
+// 		default:
+// 			if isAlphaNum(current) {
+// 				str := ""
+// 				i := pos
+// 				for isAlphaNum(current) {
+// 					str = str + string(current)
+// 					i++
+// 					if i == content_len {
+// 						break
+// 					}
+// 					current = content[i]
+// 				}
+// 				pos = pos + (i - pos - 1)
+// 				if _, ok := KEYWORDS[str]; ok {
+// 					fmt.Fprintf(os.Stdout, "%s %s null\n", strings.ToUpper(str), str)
+// 				} else {
+// 					fmt.Fprintf(os.Stdout, "IDENTIFIER %s null\n", str)
+// 				}
+// 			} else {
+// 				fmt.Fprintf(os.Stderr, "[line %d] Error: Unexpected character: %c\n", line, current)
+// 				exit_code = 65
+// 			}
+// 		}
+// 	}
+// 	fmt.Println("EOF  null")
+// 	return exit_code
+// }
